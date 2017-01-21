@@ -2,40 +2,45 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class Boundary {
-	public float xMin, xMax, zMin, zMax;
-}
-
 public class PlayerController : MonoBehaviour {
-	public Boundary boundary;
-	public GameObject startPos;
-	public GameObject endPos;
 
-	public float midPitch;
+	public float midFrequency;
 	public float lowThreshhold;
-	public float speed;
+    public AudioController audioController;
+
+    public float speed;
 	private float currentSpeed;
-	public AudioController audioController;
+    public GameObject bottomPos;
+    public GameObject topPos;
+
+    public bool debug = true;
+	
 	void FixedUpdate ()
 	{
-		
-	}
-	
-	
-	void Update ()
-	{
-		float currentFrequency = audioController.getPitch ();
-		if (currentFrequency > midPitch) {
-			currentSpeed = speed;
-			
-		} else if (currentFrequency < midPitch && currentFrequency > lowThreshhold) {
-			currentSpeed = -speed;
-		} else {
-			currentSpeed = 0;
-		}
-
+        currentSpeed = debug ? getDebugInput() : getPitchInput();
 		transform.position = transform.position + new Vector3(0, currentSpeed * Time.fixedDeltaTime, 0);
-
 	}
+
+    private float getPitchInput() {
+        float currentFrequency = audioController.getPitch();
+
+        if (currentFrequency > midFrequency && transform.position.y < topPos.transform.position.y) {
+            return speed;
+        } else if (currentFrequency < midFrequency && currentFrequency > lowThreshhold && transform.position.y > bottomPos.transform.position.y) {
+            return -speed;
+        } else {
+            return 0;
+        }
+    }
+
+    private float getDebugInput() {
+        if (Input.GetAxis("Vertical") > 0 && transform.position.y < topPos.transform.position.y) {
+            return speed;
+        } else if (Input.GetAxis("Vertical") < 0 && transform.position.y > bottomPos.transform.position.y) {
+            return -speed;
+        } else {
+            return 0;
+        }
+    }
+
 }
