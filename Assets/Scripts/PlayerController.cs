@@ -18,7 +18,9 @@ public class PlayerController : MonoBehaviour {
 	void FixedUpdate ()
 	{
         setAcceleration();
-		transform.position = transform.position + new Vector3(0, currentSpeed * Time.fixedDeltaTime, 0);
+        float newY = Mathf.Clamp(transform.position.y + currentSpeed * Time.fixedDeltaTime, bottomPos.transform.position.y, topPos.transform.position.y);
+
+        transform.position = new Vector3(transform.position.x, newY, 0);
 	}
 
     private void setAcceleration() {
