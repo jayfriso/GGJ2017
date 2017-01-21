@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour {
 	
 	void FixedUpdate ()
 	{
-        currentSpeed = getSpeed();
+        setAcceleration();
 		transform.position = transform.position + new Vector3(0, currentSpeed * Time.fixedDeltaTime, 0);
 	}
 
