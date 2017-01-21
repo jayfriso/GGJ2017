@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class DestroyByContact : MonoBehaviour {
 
-	void OnTriggerEnter(Collider other) 
-    {
-        Destroy(other.gameObject);
-        Destroy(gameObject);
-        Debug.Log("collision detected");
+	void OnTriggerEnter2D (Collider2D other)
+	{
+		if (other.tag == "Player") {
+			Debug.Log("collision detected");
+		}
+
     }
 }
