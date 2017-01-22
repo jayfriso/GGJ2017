@@ -27,7 +27,7 @@ public class GameController : MonoBehaviour {
 	void Start () {
 		StartCoroutine (SpawnWaves());
 		score = GameManager.instance.getScore();
-		lvlTransitionGap = 3.0f;
+		lvlTransitionGap = 5.0f;
 	}
 
 	GameObject pickRandomSpirit ()

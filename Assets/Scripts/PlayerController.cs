@@ -31,16 +31,21 @@ public class PlayerController : MonoBehaviour {
         }
 	}
 
-    private void setAcceleration() {
-        float currentFrequency = audioController.getPitch();
-        float debugInput = Input.GetAxis("Vertical");
+    private void setAcceleration ()
+	{
+		float currentFrequency = audioController.getPitch ();
+		float debugInput = Input.GetAxis ("Vertical");
 
-        if ((currentFrequency > midFrequency || (debug && debugInput> 0)) && transform.position.y < topPos.transform.position.y) {
-            currentSpeed = Mathf.Clamp(currentSpeed + acceleration * Time.fixedDeltaTime, -maxSpeed, maxSpeed);
-            AudioManager.instance.musicManager.setThemePitch(2);
-            carpet.switchFrequency(2);
-        } else if (((currentFrequency < midFrequency && currentFrequency > lowThreshhold) || (debug && debugInput < 0))  && transform.position.y > bottomPos.transform.position.y) {
-            currentSpeed = Mathf.Clamp(currentSpeed - acceleration * Time.fixedDeltaTime, -maxSpeed, maxSpeed);
+		if ((currentFrequency > midFrequency || (debug && debugInput > 0))) {
+			if (transform.position.y < topPos.transform.position.y) {
+				currentSpeed = Mathf.Clamp (currentSpeed + acceleration * Time.fixedDeltaTime, -maxSpeed, maxSpeed);
+			}
+			AudioManager.instance.musicManager.setThemePitch (2);
+			carpet.switchFrequency (2);
+		} else if (((currentFrequency < midFrequency && currentFrequency > lowThreshhold) || (debug && debugInput < 0))) {
+			if (transform.position.y > bottomPos.transform.position.y) {
+				currentSpeed = Mathf.Clamp (currentSpeed - acceleration * Time.fixedDeltaTime, -maxSpeed, maxSpeed);
+			}
             AudioManager.instance.musicManager.setThemePitch(0);
             carpet.switchFrequency(0);
         } else {
