@@ -5,14 +5,18 @@ using UnityEngine;
 public class WavyMover : MonoBehaviour {
 
 	public float speed;
+	public float minFrequency;
+	public float maxFrequency;
+	public float minAmp;
+	public float maxAmp;
 	float frequency;
 	float amplitude;
 	float initialYPos;
 
 	void Start ()
 	{
-		frequency = Random.Range(5.0f, 10.0f);
-		amplitude = Random.Range(0.5f, 1.0f);
+		frequency = Random.Range(minFrequency, maxFrequency);
+		amplitude = Random.Range(minAmp, maxAmp);
        	initialYPos = transform.position.y;
 		GetComponent<Rigidbody2D>().velocity = new Vector3(-speed, 0, 0);
 	}
