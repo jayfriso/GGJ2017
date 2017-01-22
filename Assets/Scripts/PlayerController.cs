@@ -34,8 +34,12 @@ public class PlayerController : MonoBehaviour {
 
         if ((currentFrequency > midFrequency || (debug && debugInput> 0)) && transform.position.y < topPos.transform.position.y) {
             currentSpeed = Mathf.Clamp(currentSpeed + acceleration * Time.fixedDeltaTime, -maxSpeed, maxSpeed);
+            AudioManager.instance.musicManager.setThemePitch(2);
         } else if (((currentFrequency < midFrequency && currentFrequency > lowThreshhold) || (debug && debugInput < 0))  && transform.position.y > bottomPos.transform.position.y) {
             currentSpeed = Mathf.Clamp(currentSpeed - acceleration * Time.fixedDeltaTime, -maxSpeed, maxSpeed);
+            AudioManager.instance.musicManager.setThemePitch(0);
+        } else {
+            AudioManager.instance.musicManager.setThemePitch(1);
         }
     }
 
