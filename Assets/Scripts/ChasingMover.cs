@@ -10,8 +10,6 @@ public class ChasingMover : MonoBehaviour {
 	public float acceleration;
 	public float minYSpeed;
 	public float maxYSpeed;
-	public float minZRotation;
-	public float maxZRotation;
 
 	void Start ()
 	{
