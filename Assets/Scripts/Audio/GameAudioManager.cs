@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameAudioManager : MonoBehaviour {
+public class GameAudioManager : AbstractAudioManager {
 
 	// Use this for initialization
 	void Start () {

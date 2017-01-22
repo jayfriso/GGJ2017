@@ -6,8 +6,8 @@ public class DestroyByContact : MonoBehaviour {
 
 	void OnTriggerEnter2D (Collider2D other)
 	{
-		if (other.tag == "Player") {
-			Debug.Log("collision detected");
+		if (other.tag == "Player"&& !GameManager.instance.isGameOver) {
+            GameManager.instance.gameOver();
 		}
 
     }
