@@ -8,7 +8,10 @@ public class Background : MonoBehaviour {
     private float currentOffset = 0;
     public float scrollSpeed;
 
-    void Start() { renderer = GetComponent<Renderer>(); }
+    void Start() {
+        renderer = GetComponent<Renderer>();
+        renderer.sortingLayerName = "Background";
+    }
 
 	// Update is called once per frame
 	void Update () {
