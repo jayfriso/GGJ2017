@@ -7,11 +7,15 @@ public class GameController : MonoBehaviour {
 	public GameObject StraightSpirit;
 	public GameObject WavySpirit;
 	public GameObject ChasingSpirit;
+	public GameObject[] spiritsArray = new GameObject[3];
 
 	public Vector2 spawnCoordinates;
-	public float startWaitTime;
-	public float spawnGapTime;
-	public float lvlTransitionGap;
+
+	float startWaitTime;
+	float shortSpawnGapTime;
+	float mediumSpawnGapTime;
+	float longSpawnGapTime;
+	float lvlTransitionGap;
 
 	public int lvlOneMaxScore;
 	public int lvlTwoMaxScore;
@@ -23,8 +27,13 @@ public class GameController : MonoBehaviour {
 	void Start () {
 		StartCoroutine (SpawnWaves());
 		score = GameManager.instance.getScore();
-		spawnGapTime = 2.0f;
 		lvlTransitionGap = 3.0f;
+	}
+
+	GameObject pickRandomSpirit ()
+	{
+		int random = Random.Range(0,3);
+		return spiritsArray[random];
 	}
 
 	IEnumerator SpawnWaves ()
@@ -34,9 +43,11 @@ public class GameController : MonoBehaviour {
 		while (true) {
 
 			while (score <= lvlOneMaxScore && !isDead) {
+				shortSpawnGapTime = Random.Range (1.5f, 2.5f);
+
 				Vector2 spawnPosition = new Vector2 (spawnCoordinates.x, Random.Range (-spawnCoordinates.y, spawnCoordinates.y));
 				Instantiate (StraightSpirit, spawnPosition, Quaternion.identity);
-				yield return new WaitForSeconds (spawnGapTime);
+				yield return new WaitForSeconds (shortSpawnGapTime);
 				score = GameManager.instance.getScore ();
 			}
 
@@ -45,9 +56,11 @@ public class GameController : MonoBehaviour {
 			}
 
 			while (score > lvlOneMaxScore && score <= lvlTwoMaxScore && !isDead) {
+				mediumSpawnGapTime = Random.Range (2.5f, 4.0f);
+
 				Vector2 spawnPosition = new Vector2 (spawnCoordinates.x, Random.Range (-spawnCoordinates.y, spawnCoordinates.y));
 				Instantiate (WavySpirit, spawnPosition, Quaternion.identity);
-				yield return new WaitForSeconds (spawnGapTime);
+				yield return new WaitForSeconds (mediumSpawnGapTime);
 				score = GameManager.instance.getScore ();
 			}
 
@@ -56,9 +69,19 @@ public class GameController : MonoBehaviour {
 			}
 
 			while (score > lvlTwoMaxScore && score <= lvlThreeMaxScore && !isDead) {
+				longSpawnGapTime = Random.Range (4.0f, 5.0f);
 				Vector2 spawnPosition = new Vector2 (spawnCoordinates.x, Random.Range (-spawnCoordinates.y, spawnCoordinates.y));
 				Instantiate (ChasingSpirit, spawnPosition, Quaternion.identity);
-				yield return new WaitForSeconds (spawnGapTime);
+				yield return new WaitForSeconds (longSpawnGapTime);
+				score = GameManager.instance.getScore ();
+			}
+
+			while (score > lvlThreeMaxScore && !isDead) {
+				mediumSpawnGapTime = Random.Range (1.0f, 4.0f);
+
+				Vector2 spawnPosition = new Vector2 (spawnCoordinates.x, Random.Range (-spawnCoordinates.y, spawnCoordinates.y));
+				Instantiate (pickRandomSpirit(), spawnPosition, Quaternion.identity);
+				yield return new WaitForSeconds (mediumSpawnGapTime);
 				score = GameManager.instance.getScore ();
 			}
 
@@ -66,11 +89,7 @@ public class GameController : MonoBehaviour {
 				yield return new WaitForSeconds (lvlTransitionGap);
 			}
 
-			while (score > lvlThreeMaxScore && !isDead) {
-				Vector2 spawnPosition = new Vector2 (spawnCoordinates.x, Random.Range (-spawnCoordinates.y, spawnCoordinates.y));
-				Instantiate (WavySpirit, spawnPosition, Quaternion.identity);
-				yield return new WaitForSeconds (spawnGapTime);
-			}
+
 
 			while (isDead) {
 				Debug.Log("i'm still dead");
