@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour {
         AudioController audioController = player.audioController;
         
         //wait for the space button or a high pitch sound to be made
-        while (!(Input.GetButtonDown("Restart") || audioController.getPitch() > player.midFrequency)) { yield return null;}
+        while (!(Input.GetButtonDown("Restart") || (audioController.getPitch() < player.midFrequency && audioController.getPitch() > player.lowThreshhold))) { yield return null;}
         restartGame();
         yield return null;
     }
