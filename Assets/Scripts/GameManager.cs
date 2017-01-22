@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -15,6 +16,10 @@ public class GameManager : MonoBehaviour {
     public float restartDelay;
 
     private GameController gameController;
+
+    public bool isTitleScreen = false;
+
+    private bool isExiting = false;
 
 	// Use this for initialization
 	void Awake () {
@@ -31,7 +36,40 @@ public class GameManager : MonoBehaviour {
     void Start() {
         gameUI = GetComponentInChildren<GameUI>();
         gameController = GetComponent<GameController>();
-       
+        if (isTitleScreen) {
+            gameController.isDead = true; //set dead to true so no things will be spawned
+            gameUI.showScoreUI(false);
+        }       
+    }
+
+    void Update() {
+        checkForExit();
+    }
+
+    private void checkForExit() {
+        if (Input.GetButtonDown("Cancel") && !isExiting) {
+            StartCoroutine(waitForFullExit());
+        }
+    }
+
+    private IEnumerator waitForFullExit() {
+        isExiting = true;
+        float waitTime = 1;
+        yield return new WaitForSeconds(waitTime);
+        if (Input.GetButton("Cancel")) {
+            Debug.Log("QUITTED!!!!");
+            Application.Quit();
+        } else {
+            isExiting = false;
+        }
+        yield return null;
+    }
+
+    public void firstStart() {
+        gameController.isDead = false;
+        gameUI.showScoreUI(true);
+        AudioManager.instance.musicManager.startMusicTracks();
+        SceneManager.LoadScene("MainScene");
     }
 
     public void restartGame() {

@@ -5,6 +5,7 @@ using UnityEngine;
 public class MusicManager : AbstractAudioManager {
 
     public AudioSource[] themes; //Organized of P1L, P1M, P1H, P2L....
+    public AudioSource introSong; public float introSongVolume = 1f;
     public float themeVolume;
     public float defaultFadeInSpeed = 1f; public float defaultFadeOutSpeed = 1f;
     private int themeIndex = 0; //The base index to start at
@@ -12,9 +13,18 @@ public class MusicManager : AbstractAudioManager {
     public float switchTime;
     public bool canSwitch = true;
 
-    void Start() { startMusicTracks(); }
+    void Start() {
+        if(GameManager.instance.isTitleScreen) {
+            playIntroSong();
+        } else {
+            startMusicTracks();
+        }
+   }
+    
+    private void playIntroSong() { setTrackToFadeIn(introSong, introSongVolume); }
 
-    private void startMusicTracks() {
+    public void startMusicTracks() {
+        setTrackToFadeOut(introSong);
         for(int i=0; i<9; i++) {
             playLoopingSound(themes[i]);
         }
