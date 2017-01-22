@@ -36,6 +36,7 @@ public class GameController : MonoBehaviour {
 		return spiritsArray[random];
 	}
 
+
 	IEnumerator SpawnWaves ()
 	{
 		yield return new WaitForSeconds (startWaitTime);
@@ -44,9 +45,10 @@ public class GameController : MonoBehaviour {
 
 			while (score <= lvlOneMaxScore && !isDead) {
 				shortSpawnGapTime = Random.Range (1.5f, 2.5f);
-
+				float randomScaleFactor = Random.Range(0.1f, 0.13f);
 				Vector2 spawnPosition = new Vector2 (spawnCoordinates.x, Random.Range (-spawnCoordinates.y, spawnCoordinates.y));
-				Instantiate (StraightSpirit, spawnPosition, Quaternion.identity);
+				GameObject instantiatedSpirit = Instantiate (StraightSpirit, spawnPosition, Quaternion.identity) as GameObject;
+				instantiatedSpirit.transform.localScale = new Vector3(randomScaleFactor,randomScaleFactor,1.0f);
 				yield return new WaitForSeconds (shortSpawnGapTime);
 				score = GameManager.instance.getScore ();
 			}
@@ -57,9 +59,11 @@ public class GameController : MonoBehaviour {
 
 			while (score > lvlOneMaxScore && score <= lvlTwoMaxScore && !isDead) {
 				mediumSpawnGapTime = Random.Range (2.5f, 4.0f);
+				float randomScaleFactor = Random.Range(0.1f, 0.13f);
 
 				Vector2 spawnPosition = new Vector2 (spawnCoordinates.x, Random.Range (-spawnCoordinates.y, spawnCoordinates.y));
-				Instantiate (WavySpirit, spawnPosition, Quaternion.identity);
+				GameObject instantiatedSpirit = Instantiate (WavySpirit, spawnPosition, Quaternion.identity) as GameObject;
+				instantiatedSpirit.transform.localScale = new Vector3(randomScaleFactor,randomScaleFactor,1.0f);
 				yield return new WaitForSeconds (mediumSpawnGapTime);
 				score = GameManager.instance.getScore ();
 			}
@@ -70,17 +74,20 @@ public class GameController : MonoBehaviour {
 
 			while (score > lvlTwoMaxScore && score <= lvlThreeMaxScore && !isDead) {
 				longSpawnGapTime = Random.Range (4.0f, 5.0f);
+				float randomScaleFactor = Random.Range(0.1f, 0.13f);
 				Vector2 spawnPosition = new Vector2 (spawnCoordinates.x, Random.Range (-spawnCoordinates.y, spawnCoordinates.y));
-				Instantiate (ChasingSpirit, spawnPosition, Quaternion.identity);
+				GameObject instantiatedSpirit = Instantiate (ChasingSpirit, spawnPosition, Quaternion.identity) as GameObject;
+				instantiatedSpirit.transform.localScale = new Vector3(randomScaleFactor,randomScaleFactor,1.0f);
 				yield return new WaitForSeconds (longSpawnGapTime);
 				score = GameManager.instance.getScore ();
 			}
 
 			while (score > lvlThreeMaxScore && !isDead) {
 				mediumSpawnGapTime = Random.Range (1.0f, 4.0f);
-
+				float randomScaleFactor = Random.Range(0.09f, 0.13f);
 				Vector2 spawnPosition = new Vector2 (spawnCoordinates.x, Random.Range (-spawnCoordinates.y, spawnCoordinates.y));
-				Instantiate (pickRandomSpirit(), spawnPosition, Quaternion.identity);
+				GameObject instantiatedSpirit = Instantiate (pickRandomSpirit(), spawnPosition, Quaternion.identity) as GameObject;
+				instantiatedSpirit.transform.localScale = new Vector3(randomScaleFactor,randomScaleFactor,1.0f);
 				yield return new WaitForSeconds (mediumSpawnGapTime);
 				score = GameManager.instance.getScore ();
 			}
