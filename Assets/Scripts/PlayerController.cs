@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 public class PlayerController : MonoBehaviour {
 
 	public float midFrequency;
@@ -14,13 +15,17 @@ public class PlayerController : MonoBehaviour {
     public GameObject topPos;
 
     public bool debug = true;
+
+    private bool allowInput = true;
 	
 	void FixedUpdate ()
 	{
-        setAcceleration();
-        float newY = Mathf.Clamp(transform.position.y + currentSpeed * Time.fixedDeltaTime, bottomPos.transform.position.y, topPos.transform.position.y);
+        if (allowInput) {
+            setAcceleration();
+            float newY = Mathf.Clamp(transform.position.y + currentSpeed * Time.fixedDeltaTime, bottomPos.transform.position.y, topPos.transform.position.y);
 
-        transform.position = new Vector3(transform.position.x, newY, 0);
+            transform.position = new Vector3(transform.position.x, newY, 0);
+        }
 	}
 
     private void setAcceleration() {
@@ -46,4 +51,6 @@ public class PlayerController : MonoBehaviour {
             return 0;
         }
     }
+
+    public void enableInput(bool enable) { allowInput = enable; }
 }
