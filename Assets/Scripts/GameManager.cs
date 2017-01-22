@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour {
 
     private int score = 0;
 
+    private GameController gameController;
+
 	// Use this for initialization
 	void Awake () {
         //Check if instance already exists
@@ -25,6 +27,7 @@ public class GameManager : MonoBehaviour {
     }
     void Start() {
         gameUI = GetComponentInChildren<GameUI>();
+        gameController = GetComponent<GameController>();
        
     }
 
@@ -35,6 +38,7 @@ public class GameManager : MonoBehaviour {
         player.enableInput(true); //reenable the player
         gameUI.showGameOver(false); //disable the gameoverScreen
         isGameOver = false; //set the game over flag
+        gameController.isDead = false;
     }
 
     public int getScore() { return score; }
@@ -49,6 +53,7 @@ public class GameManager : MonoBehaviour {
         clearEnemies();
         gameUI.showGameOver(true);
         isGameOver = true;
+        gameController.isDead = true;
         StartCoroutine(waitForRestart());
     }
 
