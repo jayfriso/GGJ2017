@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Mover : MonoBehaviour
+public class StraightMover : MonoBehaviour
 {
-    public float speed;
+    public float speed = 5.0f;
 
     void Start ()
     {
