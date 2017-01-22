@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour {
 
     public void restartGame() {
         //TODO: restart level stuff
+        AudioManager.instance.musicManager.setThemeSwitch(0);
         score = 0; gameUI.setScoreText(score);
         PlayerController player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         player.GetComponentInChildren<Animator>().SetBool("isDead", false);
