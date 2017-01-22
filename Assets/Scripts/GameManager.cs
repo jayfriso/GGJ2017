@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour {
     private int score = 0;
     private int highscore = 0;
 
+    public float restartDelay;
+
     private GameController gameController;
 
 	// Use this for initialization
@@ -78,6 +80,7 @@ public class GameManager : MonoBehaviour {
     }
 
     private IEnumerator waitForRestart() {
+        yield return new WaitForSeconds(restartDelay);
         PlayerController player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         AudioController audioController = player.audioController;
         
