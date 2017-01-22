@@ -39,6 +39,9 @@ public class GameManager : MonoBehaviour {
         if (isTitleScreen) {
             gameController.isDead = true; //set dead to true so no things will be spawned
             gameUI.showScoreUI(false);
+        } else {
+            PlayerController player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+            player.showArrows();
         }       
     }
 
@@ -67,7 +70,7 @@ public class GameManager : MonoBehaviour {
 
     public void firstStart() {
         gameController.isDead = false;
-        gameUI.showScoreUI(true);
+        gameUI.showScoreUI(true);       
         AudioManager.instance.musicManager.startMusicTracks();
         SceneManager.LoadScene("MainScene");
     }
@@ -79,6 +82,7 @@ public class GameManager : MonoBehaviour {
         PlayerController player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         player.GetComponentInChildren<Animator>().SetBool("isDead", false);
         player.enableInput(true); //reenable the player
+        player.showArrows();
         gameUI.showGameOver(false); //disable the gameoverScreen
         isGameOver = false; //set the game over flag
         gameController.isDead = false;

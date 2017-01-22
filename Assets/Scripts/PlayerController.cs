@@ -15,11 +15,18 @@ public class PlayerController : MonoBehaviour {
     public GameObject bottomPos;
     public GameObject topPos;
 
+    public float arrowtime = 3f;
+
+    public Animator arrowAnimator;
+
     public bool debug = true;
 
     private bool allowInput = true;
 
-    void Start() { carpet = GetComponentInChildren<Carpet>(); }
+    void Start() {
+        carpet = GetComponentInChildren<Carpet>();
+        showArrows();
+    }
 	
 	void FixedUpdate ()
 	{
@@ -68,4 +75,16 @@ public class PlayerController : MonoBehaviour {
     }
 
     public void enableInput(bool enable) { allowInput = enable; }
+
+
+    public void showArrows() {
+        StartCoroutine(arrowAnimation());
+    }
+
+    private IEnumerator arrowAnimation() {
+        arrowAnimator.SetBool("fadeOut", false);
+        yield return new WaitForSeconds(arrowtime);
+        arrowAnimator.SetBool("fadeOut", true);
+        yield return null;
+    }
 }
