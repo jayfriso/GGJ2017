@@ -58,7 +58,8 @@ public class GameController : MonoBehaviour {
 			}
 
 			while (score > lvlOneMaxScore && score <= lvlTwoMaxScore && !isDead) {
-				mediumSpawnGapTime = Random.Range (2.5f, 4.0f);
+                AudioManager.instance.musicManager.setThemeSwitch(3);
+                mediumSpawnGapTime = Random.Range (2.5f, 4.0f);
 				float randomScaleFactor = Random.Range(0.1f, 0.13f);
 
 				Vector2 spawnPosition = new Vector2 (spawnCoordinates.x, Random.Range (-spawnCoordinates.y, spawnCoordinates.y));
@@ -73,7 +74,8 @@ public class GameController : MonoBehaviour {
 			}
 
 			while (score > lvlTwoMaxScore && score <= lvlThreeMaxScore && !isDead) {
-				longSpawnGapTime = Random.Range (4.0f, 5.0f);
+                AudioManager.instance.musicManager.setThemeSwitch(6);
+                longSpawnGapTime = Random.Range (4.0f, 5.0f);
 				float randomScaleFactor = Random.Range(0.1f, 0.13f);
 				Vector2 spawnPosition = new Vector2 (spawnCoordinates.x, Random.Range (-spawnCoordinates.y, spawnCoordinates.y));
 				GameObject instantiatedSpirit = Instantiate (ChasingSpirit, spawnPosition, Quaternion.identity) as GameObject;

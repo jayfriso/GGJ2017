@@ -30,6 +30,12 @@ public class MusicManager : AbstractAudioManager {
         }
     }
 
+    public void setThemeSwitch(int newThemeIndex) {
+        if (themeIndex != newThemeIndex) {
+            StartCoroutine(switchThemes(newThemeIndex));
+        }
+    }
+
     private IEnumerator switchPitches(int pitchIndex) {
         canSwitch = false; //dont switch again until we fully swtich
         int currentIndex = themeIndex + currentPitchIndex;
@@ -47,6 +53,22 @@ public class MusicManager : AbstractAudioManager {
         canSwitch = true;
         yield return null;
 
+    }
+
+    private IEnumerator switchThemes(int newThemeIndex) {
+        canSwitch = false; //dont switch again until we fully swtich
+        int currentIndex = themeIndex + currentPitchIndex;
+        int newIndex = newThemeIndex + currentPitchIndex;
+        themeIndex = newThemeIndex;
+        float time = 0f;
+        while (time < switchTime) {
+            time += Time.deltaTime;
+            float ratio = Mathf.Lerp(0, themeVolume, time / switchTime);
+            themes[newIndex].volume = ratio;
+            themes[currentIndex].volume = 1 - ratio;
+            yield return null;
+        }
+        canSwitch = true;
     }
 
 

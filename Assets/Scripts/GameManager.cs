@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour {
 
     public void restartGame() {
         //TODO: restart level stuff
+        AudioManager.instance.musicManager.setThemeSwitch(0);
         score = 0; gameUI.setScoreText(score);
         PlayerController player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         player.GetComponentInChildren<Animator>().SetBool("isDead", false);
@@ -85,7 +86,7 @@ public class GameManager : MonoBehaviour {
         AudioController audioController = player.audioController;
         
         //wait for the space button or a high pitch sound to be made
-        while (!(Input.GetButtonDown("Restart") || audioController.getPitch() > player.midFrequency)) { yield return null;}
+        while (!(Input.GetButtonDown("Restart") || (audioController.getPitch() < player.midFrequency && audioController.getPitch() > player.lowThreshhold))) { yield return null;}
         restartGame();
         yield return null;
     }
