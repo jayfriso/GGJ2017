@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour {
     private GameUI gameUI;
 
     private int score = 0;
+    private int highscore = 0;
 
     private GameController gameController;
 
@@ -53,11 +54,21 @@ public class GameManager : MonoBehaviour {
         PlayerController player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         player.GetComponentInChildren<Animator>().SetBool("isDead", true);
         player.enableInput(false); //disable the player input
-        clearEnemies();
+        clearEnemies();        
         gameUI.showGameOver(true);
+        gameUI.showScoreScreen(checkHighScore(), score, highscore);
         isGameOver = true;
         gameController.isDead = true;
         StartCoroutine(waitForRestart());
+    }
+
+
+    //returns if you just got a high score and sets the highscore
+    private bool checkHighScore() {
+        if (score > highscore) {
+            highscore = score;
+            return true;
+        } else { return false; }
     }
 
     //Destroys all the enemies currently in the scene
