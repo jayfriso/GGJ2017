@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class GameUI : MonoBehaviour {
 
-    public Text scoreText;
+    public GameObject scoreUI;
     public GameObject gameOverScreen;
     private string scoreString = "SCORE: ";
 
@@ -21,7 +21,12 @@ public class GameUI : MonoBehaviour {
 	}
 	
 	public void setScoreText(int score) {
-        scoreText.text = scoreString + score;
+
+        scoreUI.GetComponent<Text>().text = scoreString + score;
+    }
+
+    public void showScoreUI(bool show) {
+        scoreUI.SetActive(show);
     }
 
     public void showGameOver(bool show) {
