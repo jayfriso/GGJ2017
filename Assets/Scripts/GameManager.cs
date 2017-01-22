@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour {
         //TODO: restart level stuff
         score = 0; gameUI.setScoreText(score);
         PlayerController player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        player.GetComponentInChildren<Animator>().SetBool("isDead", false);
         player.enableInput(true); //reenable the player
         gameUI.showGameOver(false); //disable the gameoverScreen
         isGameOver = false; //set the game over flag
@@ -48,7 +49,9 @@ public class GameManager : MonoBehaviour {
     }
 
     public void gameOver() {
+        AudioManager.instance.gameAudioManager.playScream();
         PlayerController player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        player.GetComponentInChildren<Animator>().SetBool("isDead", true);
         player.enableInput(false); //disable the player input
         clearEnemies();
         gameUI.showGameOver(true);
